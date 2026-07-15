@@ -1,0 +1,60 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Users rules
+    match /users/{uid} {
+      allow read: if isAuthenticated();
+      allow write: if isOwner(uid);
+    }
+
+    // Contacts rules
+    match /contacts/{contactId} {
+      allow read: if isAuthenticated() && (resource == null || resource.data.userId == request.auth.uid);
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+
+    // Journeys rules
+    match /journeys/{journeyId} {
+      allow read: if isAuthenticated() && (resource == null || resource.data.userId == request.auth.uid);
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+
+    // Incidents rules
+    match /incidents/{incidentId} {
+      allow read: if isAuthenticated(); // Allowed for community safety heatmap/alerts
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+
+    // SOS History rules
+    match /sosHistory/{sosId} {
+      allow read: if isAuthenticated() && (resource == null || resource.data.userId == request.auth.uid);
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+
+    // Notifications rules
+    match /notifications/{notificationId} {
+      allow read: if isAuthenticated() && (resource == null || resource.data.userId == request.auth.uid);
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+
+    // Settings rules
+    match /settings/{settingsId} {
+      allow read: if isAuthenticated() && (settingsId == request.auth.uid || (resource != null && resource.data.userId == request.auth.uid));
+      allow write: if isAuthenticated() && (settingsId == request.auth.uid || request.resource.data.userId == request.auth.uid);
+    }
+  }
+}

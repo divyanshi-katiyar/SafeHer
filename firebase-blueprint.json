@@ -1,0 +1,138 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "SafeHer User Profile Info",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phoneNumber": { "type": "string" },
+        "bloodGroup": { "type": "string" },
+        "emergencyInfo": { "type": "string" },
+        "address": { "type": "string" },
+        "medicalNotes": { "type": "string" },
+        "photoURL": { "type": "string" }
+      },
+      "required": ["uid", "name", "email"]
+    },
+    "Contact": {
+      "title": "Emergency Contact",
+      "description": "Contact person for emergency alerts",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "relationship": { "type": "string" }
+      },
+      "required": ["id", "userId", "name", "phone"]
+    },
+    "Journey": {
+      "title": "Journey",
+      "description": "Active or historical journey tracker details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "source": { "type": "string" },
+        "destination": { "type": "string" },
+        "expectedArrivalTime": { "type": "string" },
+        "notes": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "source", "destination", "expectedArrivalTime", "status"]
+    },
+    "Incident": {
+      "title": "Incident",
+      "description": "Reported safety incidents",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "imageURL": { "type": "string" },
+        "location": { "type": "object" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "title", "category", "description", "date", "time"]
+    },
+    "SOSEvent": {
+      "title": "SOS Event",
+      "description": "Triggered SOS alerts with locations",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "location": { "type": "object" },
+        "status": { "type": "string" }
+      },
+      "required": ["id", "userId", "timestamp", "status"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "User notification alerts",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string" },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "title", "message", "type", "read", "createdAt"]
+    },
+    "Settings": {
+      "title": "Settings",
+      "description": "User application settings preferences",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "theme": { "type": "string" },
+        "notificationPreferences": { "type": "object" }
+      },
+      "required": ["userId", "theme"]
+    }
+  },
+  "firestore": {
+    "/users/{uid}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profile collection"
+    },
+    "/contacts/{contactId}": {
+      "schema": { "$ref": "#/entities/Contact" },
+      "description": "Emergency contacts collection"
+    },
+    "/journeys/{journeyId}": {
+      "schema": { "$ref": "#/entities/Journey" },
+      "description": "Journey history and active journeys"
+    },
+    "/incidents/{incidentId}": {
+      "schema": { "$ref": "#/entities/Incident" },
+      "description": "Reported safety incidents"
+    },
+    "/sosHistory/{sosId}": {
+      "schema": { "$ref": "#/entities/SOSEvent" },
+      "description": "Triggered emergency SOS signals"
+    },
+    "/notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/Notification" },
+      "description": "Alert notifications history"
+    },
+    "/settings/{settingsId}": {
+      "schema": { "$ref": "#/entities/Settings" },
+      "description": "User settings configurations"
+    }
+  }
+}

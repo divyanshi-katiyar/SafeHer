@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-primary: #F8BBD0;
+  --color-secondary: #F48FB1;
+  --color-accent: #E91E63;
+  --color-bg-light: #FFF9FB;
+  --color-bg-dark: #121212;
+  --color-card-dark: #1E1E1E;
+}
+
+@layer base {
+  body {
+    @apply font-sans antialiased text-slate-800 bg-[#FFF9FB] dark:bg-[#121212] dark:text-slate-200 transition-colors duration-300;
+  }
+}
+
+/* Beautiful custom pink glow effect button styling */
+.pink-glow {
+  box-shadow: 0 4px 14px 0 rgba(233, 30, 99, 0.3);
+}
+
+.pink-glow:hover {
+  box-shadow: 0 6px 20px 0 rgba(233, 30, 99, 0.45);
+}
+
+.pink-glow-lg {
+  box-shadow: 0 10px 30px 0 rgba(233, 30, 99, 0.4);
+}
+
+.pink-glow-lg:hover {
+  box-shadow: 0 15px 35px 0 rgba(233, 30, 99, 0.6);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-pink-200 dark:bg-pink-900/30 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-pink-300 dark:bg-pink-800/50;
+}

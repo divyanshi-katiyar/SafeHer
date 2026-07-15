@@ -1,0 +1,6 @@
+{
+  "name": "SafeHer",
+  "description": "SafeHer is a premium women's safety web application designed to empower women with real-time journey tracking, instant SOS alerts, community incident reporting, and easy access to emergency help and contacts.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
